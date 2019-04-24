@@ -11,6 +11,51 @@
 
 char* readline();
 char** split_string(char*);
+void minimumBribes(int q_count, int* q) {
+  int i,j;
+  int bribes = 0;
+  int diff = 0;
+  int swap ;
+#define PREV      i-1 
+#define CURNT     i   
+#define OFFSET    i+1            
+
+  for(i = 0; i < q_count ; i++)
+  {
+//    printf("Main:q[%d]=%d q[%d]=%d\n",i,q[i],i+1,q[i+1]);
+
+    for( j = i ; j < q_count -1; j++) {
+  //  printf("SUB:q[%d]=%d q[%d]=%d\n",j,q[j],j+1,q[j+1]);
+    if( q[j] > q[j+1]){
+
+    //printf("Before:q[%d]=%d q[%d]=%d\n",j,q[j],j+1,q[j+1]);
+      diff = abs( q[j] - (j+1));
+      //printf("diff =%d \n",diff);
+      if( diff > 2){
+
+        printf("Too chaotic\n");
+        return;
+      } else {
+          swap = q[j];
+          q[j] = q[j+1];
+          q[j+1] = swap;
+
+    //printf("After: q[%d]=%d q[%d]=%d\n",j,q[j],j+1,q[j+1]);
+        bribes ++;
+        }
+      }
+    }
+
+    }
+
+
+
+
+      printf("%d\n",bribes);
+
+  
+
+}
 
 // Complete the minimumBribes function below.
 void minimumBribes(int q_count, int* q) {
