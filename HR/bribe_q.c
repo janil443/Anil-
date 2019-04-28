@@ -20,39 +20,53 @@ void minimumBribes(int q_count, int* q) {
 #define CURNT     i   
 #define OFFSET    i+1            
 
-  for(i = 0; i < q_count ; i++)
-  {
-//    printf("Main:q[%d]=%d q[%d]=%d\n",i,q[i],i+1,q[i+1]);
+void minimumBribes(int q_count, int* q) {
 
-    for( j = i ; j < q_count -1; j++) {
-  //  printf("SUB:q[%d]=%d q[%d]=%d\n",j,q[j],j+1,q[j+1]);
-    if( q[j] > q[j+1]){
+    int i,j;
+    int b = 0;
+    int diff;
+    int temp;
 
-    //printf("Before:q[%d]=%d q[%d]=%d\n",j,q[j],j+1,q[j+1]);
-      diff = abs( q[j] - (j+1));
-      //printf("diff =%d \n",diff);
-      if( diff > 2){
-
-        printf("Too chaotic\n");
-        return;
-      } else {
-          swap = q[j];
-          q[j] = q[j+1];
-          q[j+1] = swap;
-
-    //printf("After: q[%d]=%d q[%d]=%d\n",j,q[j],j+1,q[j+1]);
-        bribes ++;
-        }
-      }
+    for( i = q_count-1 ; i > 0 ; i--){
+        //printf("i=%d q[%d]=%d \n",i,i,q[i]);
+                if(q[i] == i+1)
+                {
+        //            printf("i=%d continue \n",i);
+                    continue;
+                } else if(q[i-1] == i+1 ) {
+       // printf("B:i=%d q[%d]=%d q[%d]=%d\n",i,i,q[i],i-1,q[i-1]);
+                  temp = q[i];
+                  q[i] = q[i-1];
+                  q[i-1] = temp;
+                  b++;
+      //              printf("One Bribe :i=%d b=%d\n",i,b);
+       // printf("A:i=%d q[%d]=%d q[%d]=%d\n",i,i,q[i],i-1,q[i-1]);
+              } else if (q[i-2]== i+1){
+       // printf("B:i=%d q[%d]=%d q[%d]=%d\n",i,i,q[i],i-2,q[i-2]);
+                  if(q[i-1] < q[i]) {
+                  temp = q[i-2];
+                  q[i-2] = q[i-1];
+                  q[i-1] = temp;
+                  temp  = q[i];
+                  q[i] = q[i-1];
+                  q[i-1] = temp;                 
+                  b += 2;
+                  } else{
+                      temp = q[i];
+                      q[i] = q[i-2];
+                      q[i-2] = temp;
+                  b += 3;
+                  }
+                  //  printf("two Bribe :i=%d b=%d\n",i,b);
+     //   printf("A:i=%d q[%d]=%d q[%d]=%d\n",i,i,q[i],i-2,q[i-2]);
+              }else {
+                  printf("Too chaotic\n");
+                  return;
+              }
     }
-
-    }
-
-
-
-
-      printf("%d\n",bribes);
-
+    printf("%d\n",b);
+    return;
+}
   
 
 }
