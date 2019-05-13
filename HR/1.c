@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <errno.h>
 
 char* readline();
 char** split_string(char*);
@@ -15,11 +16,11 @@ char** split_string(char*);
 long arrayManipulation(int n, int queries_rows, int queries_columns, int** queries) {
         int *arr = NULL;
         int i, j;
-        long *ar = NULL;
-        ar = calloc(n+1, sizeof(long));
+        int **ar = NULL;
+//        ar = calloc(n+1, sizeof(long));
         int s1 = n,s2 =n,m1 =0,m2 =0; 
         long long max =0;
-
+#if 0
         for( i =0 ; i < queries_rows ; i++)
             {
                 arr = (queries[i]);
@@ -74,6 +75,26 @@ long arrayManipulation(int n, int queries_rows, int queries_columns, int** queri
                }
             }
             free(ar);
+#else
+         
+        *ar = (int*)calloc(n*queries_rows, sizeof(int));
+          if(ar == NULL)
+          {
+            perror("No memory \n");
+
+            return -ENOMEM;
+          }
+
+        for( i =0 ; i < queries_rows ; i++)
+            {
+                arr = (queries[i]);
+                memset(ar[i]+arr[0], arr[2],arr[1]);
+            }
+
+          free(*ar);
+
+
+#endif
     return max;
 
 
